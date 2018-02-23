@@ -17,8 +17,8 @@ int main()
     cout << "\nEnter rate of return:\n";
     cin >> r;
 
-    payoff vanillaCall(s, payoff::call);
-    payoff vanillaPut(s, payoff::put);
+    payoffCall vanillaCall(s);
+    payoffPut vanillaPut(s);
 
     cout << "The prices are " << simpleMC(vanillaCall, e, p, v, r) << " for the call and " << simpleMC(vanillaPut, e, p, v, r) << " for the put." << endl;
     return 0;

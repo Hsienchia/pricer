@@ -1,17 +1,15 @@
 #include "payoff.h"
 #include <algorithm>
 
-payoff::payoff(double _strike, OptionType _type) : strike(_strike), type(_type) {}
+payoffCall::payoffCall(double _strike) : strike(_strike) {}
+payoffPut::payoffPut(double _strike) : strike(_strike) {}
 
-double payoff::operator()(double spot) const
+double payoffCall::operator()(double _spot) const
 {
-    switch (type)
-    {
-    case call:
-        return std::max(spot - strike, 0.0);
-    case put:
-        return std::max(strike - spot, 0.0);
-    default:
-        throw("Unknown option type found.");
-    }
+    return std::max(_spot - strike, 0.0);
+}
+
+double payoffPut::operator()(double _spot) const
+{
+    return std::max(strike - _spot, 0.0);
 }
