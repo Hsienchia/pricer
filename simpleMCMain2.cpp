@@ -19,7 +19,9 @@ int main()
 
     payoffCall vanillaCall(s);
     payoffPut vanillaPut(s);
+    VanillaOption call(vanillaCall, e);
+    VanillaOption put(vanillaPut, e);
 
-    cout << "The prices are " << simpleMC(vanillaCall, e, p, v, r) << " for the call and " << simpleMC(vanillaPut, e, p, v, r) << " for the put." << endl;
+    cout << "The prices are " << simpleMC(call, p, v, r) << " for the call and " << simpleMC(put, p, v, r) << " for the put." << endl;
     return 0;
 }

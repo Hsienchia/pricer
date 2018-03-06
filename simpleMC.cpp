@@ -2,9 +2,10 @@
 #include "random.h"
 #include <cmath>
 
-double simpleMC(const payoff &_payoff, double expiry, double spot,
+double simpleMC(const VanillaOption& option, double spot,
                 double vol, double r, unsigned long NumberOfPaths)
 {
+    double expiry=option.getExpiry();
     double variance = vol * vol * expiry;
     double movedSpot = spot * exp(r * expiry - 0.5 * variance);
     double runningSum = 0;
@@ -14,7 +15,7 @@ double simpleMC(const payoff &_payoff, double expiry, double spot,
     {
         double GaussianRV = randn();
         curSpot = movedSpot * exp(sqrt(variance) * GaussianRV);
-        double curPayoff = _payoff(curSpot);
+        double curPayoff = option.getPayoff(curSpot);
         runningSum += curPayoff;
     }
 
