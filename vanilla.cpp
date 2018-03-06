@@ -23,6 +23,11 @@ VanillaOption &VanillaOption::operator=(const VanillaOption &origin)
     return *this;
 }
 
+VanillaOption::~VanillaOption()
+{
+    delete thePayOff;
+}
+
 double VanillaOption::getExpiry() const
 {
     return expiry;
