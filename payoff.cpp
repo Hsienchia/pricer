@@ -3,6 +3,7 @@
 
 payoffCall::payoffCall(double _strike) : strike(_strike) {}
 payoffPut::payoffPut(double _strike) : strike(_strike) {}
+payoffDoubleDigital::payoffDoubleDigital(double _lower, double _upper) : lower(_lower), upper(_upper) {}
 
 double payoffCall::operator()(double _spot) const
 {
@@ -12,4 +13,11 @@ double payoffCall::operator()(double _spot) const
 double payoffPut::operator()(double _spot) const
 {
     return std::max(strike - _spot, 0.0);
+}
+
+double payoffDoubleDigital::operator()(double _spot) const
+{
+    if (_spot < lower || _spot > upper)
+        return 0.0;
+    return 1.0;
 }

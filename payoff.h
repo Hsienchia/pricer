@@ -33,4 +33,16 @@ private:
   double strike;
 };
 
+class payoffDoubleDigital : public payoff
+{
+public:
+  payoffDoubleDigital(double _lower, double _upper);
+  virtual double operator()(double _spot) const;
+  virtual ~payoffDoubleDigital(){};
+
+private:
+  double lower;
+  double upper;
+};
+
 #endif
