@@ -1,4 +1,5 @@
 #include "simpleMC.h"
+#include "parameter.h"
 #include <iostream>
 using namespace std;
 
@@ -19,9 +20,11 @@ int main()
 
     payoffCall vanillaCall(s);
     payoffPut vanillaPut(s);
+    constantPara vol(v);
+    constantPara rate(r);
     VanillaOption call(vanillaCall, e);
     VanillaOption put(vanillaPut, e);
 
-    cout << "The prices are " << simpleMC(call, p, v, r) << " for the call and " << simpleMC(put, p, v, r) << " for the put." << endl;
+    cout << "The prices are " << simpleMC(call, p, vol, rate) << " for the call and " << simpleMC(put, p, vol, rate) << " for the put." << endl;
     return 0;
 }
