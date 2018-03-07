@@ -2,12 +2,12 @@
 #include "random.h"
 #include <cmath>
 
-double simpleMC(const VanillaOption& option, double spot,
-                double vol, double r, unsigned long NumberOfPaths)
+double simpleMC(const VanillaOption &option, double spot,
+                const parameter &vol, const parameter &r, unsigned long NumberOfPaths)
 {
-    double expiry=option.getExpiry();
-    double variance = vol * vol * expiry;
-    double movedSpot = spot * exp(r * expiry - 0.5 * variance);
+    double expiry = option.getExpiry();
+    double variance = vol.integralSqr(0, expiry);
+    double movedSpot = spot * exp(r.integral(0, expiry) - 0.5 * variance);
     double runningSum = 0;
     double curSpot = 0;
 
@@ -20,6 +20,6 @@ double simpleMC(const VanillaOption& option, double spot,
     }
 
     double meanPayoff = runningSum / NumberOfPaths;
-    meanPayoff *= exp(-r * expiry);
+    meanPayoff *= exp(-r.integral(0, expiry));
     return meanPayoff;
 }
