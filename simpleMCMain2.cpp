@@ -18,13 +18,24 @@ int main()
     cout << "\nEnter rate of return:\n";
     cin >> r;
 
-    payoffCall vanillaCall(s);
-    payoffPut vanillaPut(s);
+    VanillaOption call(payoffCall(s), e);
+
     constantPara vol(v);
     constantPara rate(r);
-    VanillaOption call(vanillaCall, e);
-    VanillaOption put(vanillaPut, e);
 
-    cout << "The prices are " << simpleMC(call, p, vol, rate) << " for the call and " << simpleMC(put, p, vol, rate) << " for the put." << endl;
+    statsMean gatherer;
+    simpleMC(call, s, vol, rate, gatherer);
+    vector<vector<double>> res = gatherer.getResSoFar();
+
+    cout << endl
+         << "For the call price, the results are " << endl;
+
+    for (unsigned long i = 0; i < res.size(); ++i)
+    {
+        for (unsigned long j = 0; j < res[i].size(); ++j)
+            cout << res[i][j] << " ";
+        cout << endl;
+    }
+
     return 0;
 }

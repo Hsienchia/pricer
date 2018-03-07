@@ -2,8 +2,9 @@
 #include "random.h"
 #include <cmath>
 
-double simpleMC(const VanillaOption &option, double spot,
-                const parameter &vol, const parameter &r, unsigned long NumberOfPaths)
+void simpleMC(const VanillaOption &option, double spot,
+              const parameter &vol, const parameter &r,
+              stats &gatherer, unsigned long NumberOfPaths)
 {
     double expiry = option.getExpiry();
     double variance = vol.integralSqr(0, expiry);
@@ -16,10 +17,8 @@ double simpleMC(const VanillaOption &option, double spot,
         double GaussianRV = randn();
         curSpot = movedSpot * exp(sqrt(variance) * GaussianRV);
         double curPayoff = option.getPayoff(curSpot);
-        runningSum += curPayoff;
+        gatherer.dumpOne(curPayoff * exp(-r.integral(0, expiry)));
     }
 
-    double meanPayoff = runningSum / NumberOfPaths;
-    meanPayoff *= exp(-r.integral(0, expiry));
-    return meanPayoff;
+    return;
 }

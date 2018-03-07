@@ -2,8 +2,10 @@
 #define SIMPLEMC_H_
 #include "vanilla.h"
 #include "parameter.h"
+#include "stats.h"
 
-double simpleMC(const VanillaOption& option, double spot,
-                const parameter& vol, const parameter& r, unsigned long NumberOfPaths = 1000);
+void simpleMC(const VanillaOption& option, double spot,
+                const parameter& vol, const parameter& r, 
+                stats& gatherer, unsigned long NumberOfPaths = 1000);
 
 #endif 
