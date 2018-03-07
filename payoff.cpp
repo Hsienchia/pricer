@@ -1,21 +1,46 @@
 #include "payoff.h"
 #include <algorithm>
 
+payoff::payoff(const payoff &origin)
+{
+    thePayOff = origin.thePayOff->clone();
+}
+
+payoff::payoff(const payoffInner &inner)
+{
+    thePayOff = inner.clone();
+}
+
+payoff::~payoff()
+{
+    delete thePayOff;
+}
+
+payoff &payoff::operator=(const payoff &origin)
+{
+    if (this != &origin)
+    {
+        delete thePayOff;
+        thePayOff = origin.thePayOff->clone();
+    }
+    return *this;
+}
+
 payoffCall::payoffCall(double _strike) : strike(_strike) {}
 payoffPut::payoffPut(double _strike) : strike(_strike) {}
 payoffDoubleDigital::payoffDoubleDigital(double _lower, double _upper) : lower(_lower), upper(_upper) {}
 
-payoff *payoffCall::clone() const
+payoffInner *payoffCall::clone() const
 {
     return new payoffCall(*this);
 }
 
-payoff *payoffPut::clone() const
+payoffInner *payoffPut::clone() const
 {
     return new payoffPut(*this);
 }
 
-payoff *payoffDoubleDigital::clone() const
+payoffInner *payoffDoubleDigital::clone() const
 {
     return new payoffDoubleDigital(*this);
 }

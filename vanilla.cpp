@@ -1,6 +1,6 @@
 #include "vanilla.h"
 
-VanillaOption::VanillaOption(const payoffBridge &_payoff, double _expiry) : thePayOff(_payoff), expiry(_expiry) {}
+VanillaOption::VanillaOption(const payoff &_payoff, double _expiry) : thePayOff(_payoff), expiry(_expiry) {}
 
 double VanillaOption::getExpiry() const
 {
