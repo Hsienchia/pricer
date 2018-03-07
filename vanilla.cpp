@@ -1,32 +1,6 @@
 #include "vanilla.h"
 
-VanillaOption::VanillaOption(const payoff &_payoff, double _expiry)
-{
-    expiry = _expiry;
-    thePayOff = _payoff.clone();
-}
-
-VanillaOption::VanillaOption(const VanillaOption &origin)
-{
-    expiry = origin.expiry;
-    thePayOff = origin.thePayOff->clone();
-}
-
-VanillaOption &VanillaOption::operator=(const VanillaOption &origin)
-{
-    if (this != &origin)
-    {
-        expiry = origin.expiry;
-        delete thePayOff;
-        thePayOff = origin.thePayOff->clone();
-    }
-    return *this;
-}
-
-VanillaOption::~VanillaOption()
-{
-    delete thePayOff;
-}
+VanillaOption::VanillaOption(const payoffBridge &_payoff, double _expiry) : thePayOff(_payoff), expiry(_expiry) {}
 
 double VanillaOption::getExpiry() const
 {
@@ -35,5 +9,5 @@ double VanillaOption::getExpiry() const
 
 double VanillaOption::getPayoff(double spot) const
 {
-    return (*thePayOff)(spot);
+    return thePayOff(spot);
 }

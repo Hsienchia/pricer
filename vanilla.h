@@ -2,21 +2,19 @@
 #define VANILLA_H_
 
 #include "payoff.h"
+#include "payoffbridge.h"
 
 class VanillaOption
 {
   public:
-    VanillaOption(const payoff &_payoff, double _expiry);
-    VanillaOption(const VanillaOption &origin);
-    VanillaOption &operator=(const VanillaOption &origin);
-    ~VanillaOption();
+    VanillaOption(const payoffBridge &_payoff, double _expiry);
 
     double getExpiry() const;
     double getPayoff(double spot) const;
 
   private:
     double expiry;
-    payoff *thePayOff;
+    payoffBridge thePayOff;
 };
 
 #endif
